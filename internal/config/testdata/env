@@ -1,0 +1,2 @@
+SERVER_PORT=8081
+SERVICE_NAME=some-service
