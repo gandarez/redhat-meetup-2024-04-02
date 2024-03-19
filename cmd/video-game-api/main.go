@@ -9,7 +9,10 @@ import (
 	"syscall"
 	"time"
 
+	dbmigration "github.com/gandarez/redhat-meetup-2024-04-02/db"
 	"github.com/gandarez/redhat-meetup-2024-04-02/internal/config"
+	"github.com/gandarez/redhat-meetup-2024-04-02/internal/database"
+	"github.com/gandarez/redhat-meetup-2024-04-02/internal/handler"
 	"github.com/gandarez/redhat-meetup-2024-04-02/internal/server"
 )
 
@@ -29,6 +32,29 @@ func main() {
 		os.Exit(1)
 	}
 
+	// Setup database
+	db := database.NewClient(database.Configuration{
+		DbName:   cfg.Database.Name,
+		Host:     cfg.Database.Host,
+		User:     cfg.Database.User,
+		Password: cfg.Database.Password,
+		Port:     cfg.Database.Port,
+	})
+
+	// Open database connection
+	if err = db.Open(ctx); err != nil {
+		logger.Error("failed to open database connection", slog.Any("error", err))
+
+		os.Exit(1)
+	}
+
+	// Run database migrations
+	if err = dbmigration.Run(db.ConnectionString, logger); err != nil {
+		logger.Error(err.Error())
+
+		os.Exit(1)
+	}
+
 	// setup server
 	httpserver := server.New(cfg.Server.Port,
 		server.WithRecover(logger),
@@ -39,6 +65,10 @@ func main() {
 	// Add default routes for health check
 	httpserver.AddRoute(server.ReadinessRoute())
 	httpserver.AddRoute(server.LivenessRoute())
+
+	// add http routes
+	httpserver.AddRoute(handler.SearchConsoleByID(ctx, logger, db))
+	httpserver.AddRoute(handler.CreateConsole(ctx, logger, db))
 
 	// start httpserver
 	go func() {

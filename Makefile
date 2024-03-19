@@ -58,3 +58,7 @@ lint: install-linter
 .PHONY: test
 test:
 	go test -count=1 -race -covermode=atomic -coverprofile=coverage.out ./...
+
+.PHONY: gen.go
+gen.go:
+	go generate ./...

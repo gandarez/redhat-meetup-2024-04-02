@@ -16,6 +16,7 @@ FROM alpine as bin
 
 # Copy from build
 COPY --from=build /src/build/video-game-api-linux-amd64 ./video-game-api
+COPY --from=build /src/db ./db
 
 # Specify the container's entrypoint as the action
 ENTRYPOINT ["./video-game-api"]

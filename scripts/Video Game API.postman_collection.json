@@ -1,0 +1,43 @@
+{
+	"info": {
+		"_postman_id": "3fa8c781-e1e7-41a2-bad6-31fbad143db6",
+		"name": "Video Game API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "1151948"
+	},
+	"item": [
+		{
+			"name": "/consoles",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": "http://localhost:17020/consoles/b171ae30-2d02-4da2-98b4-33ad2c331669"
+			},
+			"response": []
+		},
+		{
+			"name": "/consoles",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Super Nintendo\",\n    \"manufacturer\": \"Nintendo\",\n    \"release_date\": \"1990-11-21\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:17020/consoles"
+			},
+			"response": []
+		}
+	]
+}

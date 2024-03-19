@@ -12,8 +12,18 @@ import (
 type (
 	// Configuration contains loaded environment variables.
 	Configuration struct {
-		ServiceName string `env:"SERVICE_NAME,required"`
-		Server      Server `env:",prefix=SERVER_"`
+		ServiceName string   `env:"SERVICE_NAME,required"`
+		Database    Database `env:",prefix=DATABASE_"`
+		Server      Server   `env:",prefix=SERVER_"`
+	}
+
+	// Database contains database environment variables.
+	Database struct {
+		Host     string `env:"HOST,required"`
+		Name     string `env:"NAME,required"`
+		User     string `env:"USER,required"`
+		Password string `env:"PASSWORD,required"`
+		Port     int    `env:"PORT,default=5432"`
 	}
 
 	// Server contains server environment variables.
