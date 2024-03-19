@@ -10,6 +10,9 @@ import (
 	"time"
 
 	dbmigration "github.com/gandarez/redhat-meetup-2024-04-02/db"
+	redis "github.com/gandarez/redhat-meetup-2024-04-02/internal/cache"
+	"github.com/gandarez/redhat-meetup-2024-04-02/internal/client/igdb"
+	"github.com/gandarez/redhat-meetup-2024-04-02/internal/client/twitch"
 	"github.com/gandarez/redhat-meetup-2024-04-02/internal/config"
 	"github.com/gandarez/redhat-meetup-2024-04-02/internal/database"
 	"github.com/gandarez/redhat-meetup-2024-04-02/internal/handler"
@@ -55,6 +58,30 @@ func main() {
 		os.Exit(1)
 	}
 
+	// create cache client
+	cacheClient := redis.NewClient(redis.Configuration{
+		Addr:     cfg.Redis.Host,
+		Password: cfg.Redis.Password,
+		DB:       cfg.Redis.DB,
+	})
+
+	// create Twitch client
+	twitchClient := twitch.NewClient(twitch.Config{
+		BaseURL:      cfg.VendorTwitch.Host,
+		Cache:        cacheClient,
+		CacheKey:     "twitch:token",
+		ClientID:     cfg.VendorTwitch.ClientID,
+		ClientSecret: cfg.VendorTwitch.ClientSecret,
+		Logger:       logger,
+	})
+
+	// create IGDB client
+	igdbClient := igdb.NewClient(igdb.Config{
+		BaseURL:      cfg.VendorIGDB.Host,
+		Logger:       logger,
+		TwitchClient: twitchClient,
+	})
+
 	// setup server
 	httpserver := server.New(cfg.Server.Port,
 		server.WithRecover(logger),
@@ -69,6 +96,7 @@ func main() {
 	// add http routes
 	httpserver.AddRoute(handler.SearchConsoleByID(ctx, logger, db))
 	httpserver.AddRoute(handler.CreateConsole(ctx, logger, db))
+	httpserver.AddRoute(handler.SearchGameByName(ctx, logger, igdbClient))
 
 	// start httpserver
 	go func() {

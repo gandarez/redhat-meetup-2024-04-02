@@ -77,6 +77,33 @@ func TestLoad_DatabaseName(t *testing.T) {
 	assert.Equal(t, "database_name", c.Database.Name)
 }
 
+func TestLoad_RedisHost(t *testing.T) {
+	c, err := config.Load(context.Background(), "testdata/env")
+	require.NoError(t, err)
+
+	defer os.Unsetenv("REDIS_HOST")
+
+	assert.Equal(t, "localhost:6379", c.Redis.Host)
+}
+
+func TestLoad_RedisPassword(t *testing.T) {
+	c, err := config.Load(context.Background(), "testdata/env")
+	require.NoError(t, err)
+
+	defer os.Unsetenv("REDIS_PASSWORD")
+
+	assert.Equal(t, "secret", c.Redis.Password)
+}
+
+func TestLoad_RedisDB(t *testing.T) {
+	c, err := config.Load(context.Background(), "testdata/env")
+	require.NoError(t, err)
+
+	defer os.Unsetenv("REDIS_DB")
+
+	assert.Equal(t, 9, c.Redis.DB)
+}
+
 func TestLoad_ServerPort(t *testing.T) {
 	c, err := config.Load(context.Background(), "testdata/env")
 	require.NoError(t, err)
@@ -93,4 +120,40 @@ func TestLoad_ServerPort_Default(t *testing.T) {
 	defer os.Unsetenv("SERVER_PORT")
 
 	assert.Equal(t, 17020, c.Server.Port)
+}
+
+func TestLoad_VendorIGDBHost(t *testing.T) {
+	c, err := config.Load(context.Background(), "testdata/env")
+	require.NoError(t, err)
+
+	defer os.Unsetenv("VENDOR_IGDB_HOST")
+
+	assert.Equal(t, "some-api.igdb.com", c.VendorIGDB.Host)
+}
+
+func TestLoad_VendorTwitchHost(t *testing.T) {
+	c, err := config.Load(context.Background(), "testdata/env")
+	require.NoError(t, err)
+
+	defer os.Unsetenv("VENDOR_TWITCH_HOST")
+
+	assert.Equal(t, "some-api.twitch.com", c.VendorTwitch.Host)
+}
+
+func TestLoad_VendorTwitchClientID(t *testing.T) {
+	c, err := config.Load(context.Background(), "testdata/env")
+	require.NoError(t, err)
+
+	defer os.Unsetenv("VENDOR_TWITCH_CLIENT_ID")
+
+	assert.Equal(t, "some-client-id", c.VendorTwitch.ClientID)
+}
+
+func TestLoad_VendorTwitchClientSecret(t *testing.T) {
+	c, err := config.Load(context.Background(), "testdata/env")
+	require.NoError(t, err)
+
+	defer os.Unsetenv("VENDOR_TWITCH_CLIENT_SECRET")
+
+	assert.Equal(t, "some-client-secret", c.VendorTwitch.ClientSecret)
 }
