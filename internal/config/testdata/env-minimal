@@ -1,1 +1,5 @@
+DATABASE_HOST=localhost
+DATABASE_NAME=database_name
+DATABASE_USER=username
+DATABASE_PASSWORD=password
 SERVICE_NAME=some-service

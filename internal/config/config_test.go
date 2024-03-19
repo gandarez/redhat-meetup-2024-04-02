@@ -32,6 +32,51 @@ func TestLoad_ServiceName(t *testing.T) {
 	assert.Equal(t, "some-service", c.ServiceName)
 }
 
+func TestLoad_DatabaseHost(t *testing.T) {
+	c, err := config.Load(context.Background(), "testdata/env")
+	require.NoError(t, err)
+
+	defer os.Unsetenv("DATABASE_HOST")
+
+	assert.Equal(t, "localhost", c.Database.Host)
+}
+
+func TestLoad_DatabaseUser(t *testing.T) {
+	c, err := config.Load(context.Background(), "testdata/env")
+	require.NoError(t, err)
+
+	defer os.Unsetenv("DATABASE_USER")
+
+	assert.Equal(t, "username", c.Database.User)
+}
+
+func TestLoad_DatabasePassword(t *testing.T) {
+	c, err := config.Load(context.Background(), "testdata/env")
+	require.NoError(t, err)
+
+	defer os.Unsetenv("DATABASE_PASSWORD")
+
+	assert.Equal(t, "password", c.Database.Password)
+}
+
+func TestLoad_DatabasePort(t *testing.T) {
+	c, err := config.Load(context.Background(), "testdata/env")
+	require.NoError(t, err)
+
+	defer os.Unsetenv("DATABASE_PORT")
+
+	assert.Equal(t, 9999, c.Database.Port)
+}
+
+func TestLoad_DatabaseName(t *testing.T) {
+	c, err := config.Load(context.Background(), "testdata/env")
+	require.NoError(t, err)
+
+	defer os.Unsetenv("DATABASE_NAME")
+
+	assert.Equal(t, "database_name", c.Database.Name)
+}
+
 func TestLoad_ServerPort(t *testing.T) {
 	c, err := config.Load(context.Background(), "testdata/env")
 	require.NoError(t, err)
