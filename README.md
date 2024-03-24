@@ -11,7 +11,9 @@ O desafio é publicar uma API escrita em Golang no Red Hat OpenShift. Ao final s
 Para rever o desafio 1, [clique aqui](/docs/CHALLENGE_1.md).
 
 ## Desafio 2
+![diagram](/assets/diagram/desafio02.jpg)
 
+---
 - Agora que a **"feature-2"** já faz parte da branch `master`, vamos testar os dois novos endpoints **"[GET] /consoles"** e **"[POST] /consoles"**.
 - Se você tem **POSTMAN** instalado siga essas [instruções](/docs/POSTMAN.md), caso contrário vamos testar usando **curl**.
 
