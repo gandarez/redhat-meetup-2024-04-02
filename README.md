@@ -15,7 +15,9 @@ Para rever o desafio 1, [clique aqui](/docs/CHALLENGE_1.md).
 Para rever o desafio 2, [clique aqui](/docs/CHALLENGE_2.md).
 
 ## Desafio 3
+![diagram](/assets/diagram/desafio03.jpg)
 
+---
 Vamos criar um banco de dados Redis no OpenShift que será utilizado para armazenar o token de autenticação da API externa. Em seguida vamos configurar as variáveis de ambiente para que a aplicação possa se conectar no Twitch e no IGDB.
 
 - Você já aprendeu a criar um banco de dados no OpenShift, então crie um banco de dados Redis (Ephemeral). Defina a senha como **"redis"**.
