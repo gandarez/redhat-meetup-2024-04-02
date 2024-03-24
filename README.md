@@ -7,7 +7,9 @@ A Red Hat em parceria com o Golang SP os convidam para o meetup em 02/04/2024.
 O desafio é publicar uma API escrita em Golang no Red Hat OpenShift. Ao final sua API será capaz de ler e escrever em banco de dados e também consumir uma API externa.
 
 ## Desafio 1
+![diagram](./assets/diagram/desafio01.jpg)
 
+---
 - Fazer fork neste [repositório](https://github.com/gandarez/redhat-meetup-2024-04-02).
 
   > Deixar desmarcada a opção **"Copy the master branch only"**, para indicar ao GitHub copiar todas as branches no fork.
