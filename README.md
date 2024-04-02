@@ -136,3 +136,5 @@ Para nossa API ser publicada automaticamente, precisamos adicionar um webhook no
 - **Esse Readme continua após o merge na branch "master" do seu repositório**.
 
 Made with :heart: by Red Hat and Golang SP
+
+Add info no readme
