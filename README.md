@@ -138,3 +138,5 @@ Para rever o desafio 1, [clique aqui](/docs/CHALLENGE_1.md).
 - **Esse Readme continua após o merge na branch "master" do seu repositório**.
 
 Made with :heart: by Red Hat and Golang SP
+
+Add info no readme
